@@ -24,3 +24,4 @@
 - Chart testing using circle ci or helm github actions on full installtion along with functional test cases
 - Operators for backup and restore and other operations
 - Monitoring metrics and log parsing enabling / disabling with a flag
+- End of install helm chart to get all values and store in a file to be stored in private repo
