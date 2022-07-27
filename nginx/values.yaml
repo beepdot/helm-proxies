@@ -1,0 +1,32 @@
+# Default values for nginx.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: NodePort
+  port: 80
+
+bearer:
+  secretName: kong-jwt-secrets
+  secretKey: echo-user
+
+kubernetesService:
+  namespace: kube-system
+  name: kube-dns
+
+kongService:
+  namespace: default
+  name: kong
+  port: 8000

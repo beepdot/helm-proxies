@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nginx.fullname" . }}
+data:
+  proxy.conf: |-
+    server {
+        listen       80;
+        server_name  _;
+        resolver {{ include "getServiceClusterIp" (dict "Namespace" .Values.kubernetesService.namespace "Name" .Values.kubernetesService.name) }} valid=10s;
+        resolver_timeout 5s;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        location /echoWithToken {
+            proxy_set_header Authorization "Bearer {{ include "getValueFromSecret" (dict "Namespace" .Release.Namespace "Name" .Values.bearer.secretName "Key" .Values.bearer.secretKey) -}}";
+            set $target http://{{ .Values.kongService.name }}.{{ .Values.kongService.namespace }}.svc.cluster.local:{{ .Values.kongService.port }};
+            rewrite ^/echoWithToken/(.*) /echo/$1 break;
+            proxy_http_version 1.1;
+            proxy_pass $target;
+        }
+
+        location /echoWithoutToken {
+            set $target http://{{ .Values.kongService.name }}.{{ .Values.kongService.namespace }}.svc.cluster.local:{{ .Values.kongService.port }};
+            rewrite ^/echoWithToken/(.*) /echo/$1 break;
+            proxy_http_version 1.1;
+            proxy_pass $target;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
