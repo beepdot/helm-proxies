@@ -1,6 +1,6 @@
 # helm-demo
 
-### Features being shown now:
+### Features in Demo:
 - Charts availability as a helm repo
 - Usage of dependent modules as subcharts
 - Common template code for general or useful functions
@@ -18,7 +18,7 @@
 - Private repo overrides
 - Fail on missing vars, fail on incompatible kubernetes version
 
-### Future features:
+### Future Features:
 - Some sort of wrapper to run all the charts on new install and wrappers for each upgrade
 - Github actions to auto update chart versions on helm repo on each commit / tag
 - Chart testing using circle ci or helm github actions on full installtion along with functional test cases
