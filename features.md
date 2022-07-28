@@ -44,7 +44,7 @@ cd ../helm-auth
 helm upgrade --install kong kong
 helm upgrade --install kong-apis kong-apis
 helm upgrade --install kong-consumer kong-consumer
-helm upgrade --install kong-jwt-secrets -f override.yaml
+helm upgrade --install kong-jwt-secrets kong-jwt-secrets -f override.yaml
 cd ../helm-proxies
 helm upgrade --install nginx nginx
 helm upgrade --install echo echo
