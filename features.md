@@ -48,6 +48,7 @@ helm upgrade --install kong-jwt-secrets kong-jwt-secrets -f override.yaml
 cd ../helm-proxies
 helm upgrade --install nginx nginx
 helm upgrade --install echo echo
+helm test echo
 ```
 - Invoke the API using the nginx service at `NODE_IP:NODE_PORT`
 - If you are using minikube, you can use the below commands and invoke the echo API
